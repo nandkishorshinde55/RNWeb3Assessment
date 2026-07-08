@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextProps } from "react-native";
-import { useThemeStore } from "@/store/themeStore";
+import { useTheme } from "@/hooks/useAppTheme";
 
 type TextVariant =
   | "title"
@@ -35,7 +35,7 @@ export default function AppText({
   className = "",
   ...props
 }: AppTextProps) {
-  const { isDark } = useThemeStore();
+  const { isDark } = useTheme();
 
   const variantClass: Record<TextVariant, string> = {
     title: "text-appTitle font-bold",

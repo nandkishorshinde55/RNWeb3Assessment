@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { useThemeStore } from "@/store/themeStore";
+import { useTheme } from "@/hooks/useAppTheme";
 
 type AppCardProps = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export default function AppCard({
   children,
   className = "",
 }: AppCardProps) {
-  const { isDark } = useThemeStore();
+  const { isDark } = useTheme();
 
   const cardClass = isDark
     ? "bg-app-dark-card border-app-dark-border"

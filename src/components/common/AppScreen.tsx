@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useThemeStore } from "@/store/themeStore";
+import { useTheme } from "@/hooks/useAppTheme";
 
 type AppScreenProps = {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export default function AppScreen({
   className = "",
   contentClassName = "",
 }: AppScreenProps) {
-  const { isDark } = useThemeStore();
+  const { isDark } = useTheme();
   const insets = useSafeAreaInsets();
 
   const bgClass = isDark

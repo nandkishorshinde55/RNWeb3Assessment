@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
-import { useThemeStore } from "@/store/themeStore";
 import AppText from "./AppText";
+import { useTheme } from "@/hooks/useAppTheme";
 
 type AppInputProps = TextInputProps & {
   label?: string;
@@ -15,7 +15,7 @@ export default function AppInput({
   className = "",
   ...props
 }: AppInputProps) {
-  const { isDark } = useThemeStore();
+  const { isDark } = useTheme();
 
   const inputClass = isDark
     ? "bg-app-dark-input border-app-dark-border text-app-dark-text"

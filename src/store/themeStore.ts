@@ -1,31 +1,38 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
+import { appStorage } from "@/storage/appStorage";
 
 export type ThemeMode = "light" | "dark";
 
 type ThemeState = {
   mode: ThemeMode;
-  isDark: boolean;
+
   toggleTheme: () => void;
   setTheme: (mode: ThemeMode) => void;
 };
 
-export const useThemeStore = create<ThemeState>((set) => ({
-  mode: "light",
-  isDark: false,
+export const useThemeStore = create<ThemeState>()(
+  persist(
+    (set) => ({
+      mode: "light",
 
-  toggleTheme: () =>
-    set((state) => {
-      const nextMode = state.mode === "light" ? "dark" : "light";
+      toggleTheme: () =>
+        set((state) => ({
+          mode: state.mode === "light" ? "dark" : "light",
+        })),
 
-      return {
-        mode: nextMode,
-        isDark: nextMode === "dark",
-      };
+      setTheme: (mode) =>
+        set({
+          mode,
+        }),
     }),
-
-  setTheme: (mode) =>
-    set({
-      mode,
-      isDark: mode === "dark",
-    }),
-}));
+    {
+      name: "theme-storage",
+      storage: createJSONStorage(() => appStorage),
+      partialize: (state) => ({
+        mode: state.mode,
+      }),
+    }
+  )
+);
