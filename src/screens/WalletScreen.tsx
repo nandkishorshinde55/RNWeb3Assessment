@@ -86,11 +86,6 @@ export default function WalletScreen({ navigation }: Props) {
           />
         </>
       ) : null}
-       <AppButton
-            title="Go to Dashboard"
-            onPress={() => navigation.navigate("Dashboard")}
-            className="mt-appLg"
-          />
     </AppScreen>
   );
 }

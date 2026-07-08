@@ -30,7 +30,7 @@ export const sepoliaNetwork: AppKitNetwork = {
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc.sepolia.org"],
+      http: ["https://ethereum-sepolia-rpc.publicnode.com"],
     },
   },
   blockExplorers: {

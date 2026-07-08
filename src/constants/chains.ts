@@ -3,6 +3,8 @@ export const SEPOLIA_CHAIN = {
   hexChainId: "0xaa36a7",
   name: "Ethereum Sepolia",
   currency: "ETH",
-  rpcUrl: "https://rpc.sepolia.org",
+
+  rpcUrl: "https://ethereum-sepolia-rpc.publicnode.com",
+
   explorerUrl: "https://sepolia.etherscan.io",
 };

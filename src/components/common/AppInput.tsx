@@ -1,5 +1,6 @@
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
+
 import AppText from "./AppText";
 import { useTheme } from "@/hooks/useAppTheme";
 
@@ -23,25 +24,40 @@ export default function AppInput({
 
   return (
     <View className="w-full">
-      {label ? (
-        <AppText variant="caption" color="subText" className="mb-1">
+      {label && (
+        <AppText
+          variant="caption"
+          color="subText"
+          className="mb-appXs mt-2"
+        >
           {label}
         </AppText>
-      ) : null}
+      )}
 
       <TextInput
         {...props}
         placeholderTextColor={isDark ? "#9CA3AF" : "#6B7280"}
-        className={`h-12 rounded-appLg border px-appLg text-appBody ${inputClass} ${
-          error ? "border-app-danger" : ""
-        } ${className}`}
+        className={`
+          h-14
+          rounded-appLg
+          border
+          px-appLg
+          text-appBody
+          ${inputClass}
+          ${error ? "border-app-danger" : ""}
+          ${className}
+        `}
       />
 
-      {error ? (
-        <AppText variant="caption" color="danger" className="mt-1">
+      {error && (
+        <AppText
+          variant="caption"
+          color="danger"
+          className="mt-appXs"
+        >
           {error}
         </AppText>
-      ) : null}
+      )}
     </View>
   );
 }
