@@ -10,6 +10,7 @@ import TransactionStatusCard from "@/components/contract/TransactionStatusCard";
 
 import { useContract } from "@/hooks/useContract";
 import { validatePositiveInteger } from "@/utils/validation";
+import AppHeader from "@/components/common/AppHeader";
 
 export default function ContractScreen() {
   const [inputValue, setInputValue] = useState("");
@@ -47,9 +48,7 @@ export default function ContractScreen() {
 
   return (
     <AppScreen scrollable keyboardAvoiding>
-      <AppText variant="title">
-        Smart Contract
-      </AppText>
+     <AppHeader title="Smart Contract" showBack />
 
       <AppText color="subText" className="mt-appSm">
         Read and update value on Ethereum Sepolia.

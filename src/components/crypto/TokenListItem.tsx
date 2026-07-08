@@ -2,8 +2,11 @@ import React, { memo } from "react";
 import { Image, Pressable, View } from "react-native";
 
 import AppText from "@/components/common/AppText";
+import FavoriteButton from "@/components/common/FavoriteButton";
+
 import { CryptoToken } from "@/types/crypto";
 import { useFavoriteToken } from "@/hooks/useFavoriteToken";
+
 import {
   formatCompactCurrency,
   formatCurrency,
@@ -15,17 +18,11 @@ type TokenListItemProps = {
   onPress: (tokenId: string) => void;
 };
 
-function TokenListItem({
-  token,
-  onPress,
-}: TokenListItemProps) {
-  const { isFavorite, toggleFavorite } =
-    useFavoriteToken(token.id);
+function TokenListItem({ token, onPress }: TokenListItemProps) {
+  const { isFavorite, toggleFavorite } = useFavoriteToken(token.id);
 
   const tokenIsFavorite = isFavorite(token.id);
-
-  const isPositive =
-    (token.price_change_percentage_24h ?? 0) >= 0;
+  const isPositive = (token.price_change_percentage_24h ?? 0) >= 0;
 
   return (
     <Pressable
@@ -38,23 +35,8 @@ function TokenListItem({
       />
 
       <View className="flex-1">
-        <View className="flex-row items-center">
-          <AppText variant="bodyMedium">
-            {token.name}
-          </AppText>
-
-          {tokenIsFavorite ? (
-            <AppText className="ml-appSm">
-              ⭐
-            </AppText>
-          ) : null}
-        </View>
-
-        <AppText
-          color="subText"
-          variant="caption"
-          className="uppercase mt-1"
-        >
+        <AppText variant="bodyMedium">{token.name}</AppText>
+        <AppText color="subText" variant="caption" className="uppercase mt-1">
           {token.symbol}
         </AppText>
       </View>
@@ -73,17 +55,10 @@ function TokenListItem({
         </AppText>
       </View>
 
-      <Pressable
-        onPress={(event) => {
-          event.stopPropagation();
-          toggleFavorite(token.id);
-        }}
-        className="w-9 h-9 rounded-appPill items-center justify-center bg-app-light-surface dark:bg-app-dark-surface border border-app-light-border dark:border-app-dark-border"
-      >
-        <AppText>
-          {tokenIsFavorite ? "★" : "☆"}
-        </AppText>
-      </Pressable>
+      <FavoriteButton
+        active={tokenIsFavorite}
+        onPress={() => toggleFavorite(token.id)}
+      />
     </Pressable>
   );
 }

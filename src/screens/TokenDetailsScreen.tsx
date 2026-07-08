@@ -1,8 +1,11 @@
 import React, { useCallback } from "react";
 import { ScrollView, RefreshControl } from "react-native";
+
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import AppScreen from "@/components/common/AppScreen";
+import AppHeader from "@/components/common/AppHeader";
+import FavoriteButton from "@/components/common/FavoriteButton";
 import LoadingState from "@/components/common/LoadingState";
 import ErrorState from "@/components/common/ErrorState";
 
@@ -12,7 +15,6 @@ import TokenSupplyCard from "@/components/token/TokenSupplyCard";
 
 import { RootStackParamList } from "@/navigation/types";
 import { useTokenDetails } from "@/hooks/useTokenDetails";
-import AppButton from "@/components/common/AppButton";
 import { useFavoriteToken } from "@/hooks/useFavoriteToken";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TokenDetails">;
@@ -20,10 +22,11 @@ type Props = NativeStackScreenProps<RootStackParamList, "TokenDetails">;
 export default function TokenDetailsScreen({ route }: Props) {
   const { tokenId } = route.params;
 
-  const { selectedTokenIsFavorite, toggleFavorite } = useFavoriteToken(tokenId);
-
   const { data, isLoading, isError, refetch, isRefetching } =
     useTokenDetails(tokenId);
+
+  const { selectedTokenIsFavorite, toggleFavorite } =
+    useFavoriteToken(tokenId);
 
   const onRefresh = useCallback(() => {
     refetch();
@@ -45,6 +48,17 @@ export default function TokenDetailsScreen({ route }: Props) {
 
   return (
     <AppScreen>
+      <AppHeader
+        title="Token Details"
+        showBack
+        rightAction={
+          <FavoriteButton
+            active={selectedTokenIsFavorite}
+            onPress={() => toggleFavorite(tokenId)}
+          />
+        }
+      />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -52,17 +66,6 @@ export default function TokenDetailsScreen({ route }: Props) {
         }
       >
         <TokenHeader token={data} />
-
-        <AppButton
-          title={
-            selectedTokenIsFavorite
-              ? "Remove from Favorites"
-              : "Add to Favorites"
-          }
-          onPress={() => toggleFavorite(tokenId)}
-          variant={selectedTokenIsFavorite ? "danger" : "outline"}
-          className="mt-appLg"
-        />
 
         <TokenPriceCard token={data} />
 

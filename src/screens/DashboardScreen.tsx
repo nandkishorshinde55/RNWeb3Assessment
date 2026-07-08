@@ -17,6 +17,7 @@ import { useCryptoMarketsInfinite } from "@/hooks/useCryptoMarketsInfinite";
 import { useFavoriteToken } from "@/hooks/useFavoriteToken";
 import { RootStackParamList } from "@/navigation/types";
 import { CryptoToken } from "@/types/crypto";
+import AppHeader from "@/components/common/AppHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Dashboard">;
 
@@ -109,7 +110,7 @@ export default function DashboardScreen({ navigation }: Props) {
 
   return (
     <AppScreen>
-      <AppText variant="title">Crypto Dashboard</AppText>
+    <AppHeader title="Crypto Dashboard" showBack/>
 
       <AppText color="subText" className="mt-appSm">
         Market data powered by CoinGecko.

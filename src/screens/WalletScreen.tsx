@@ -11,6 +11,7 @@ import FaucetHelp from "@/components/wallet/FaucetHelp";
 import { RootStackParamList } from "@/navigation/types";
 import { useWallet } from "@/hooks/useWallet";
 import { useTheme } from "@/hooks/useAppTheme";
+import AppHeader from "@/components/common/AppHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Wallet">;
 
@@ -37,7 +38,7 @@ export default function WalletScreen({ navigation }: Props) {
 
   return (
     <AppScreen scrollable>
-      <AppText variant="title">React Native Web3</AppText>
+     <AppHeader title="Wallet" />
 
       <AppText color="subText" className="mt-appSm">
         WalletConnect/Reown integration with Zustand persistence.
