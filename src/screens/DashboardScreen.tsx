@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import AppScreen from "@/components/common/AppScreen";
@@ -14,6 +14,7 @@ import TokenListEmpty from "@/components/crypto/TokenListEmpty";
 import TokenListFooter from "@/components/crypto/TokenListFooter";
 
 import { useCryptoMarketsInfinite } from "@/hooks/useCryptoMarketsInfinite";
+import { useFavoriteToken } from "@/hooks/useFavoriteToken";
 import { RootStackParamList } from "@/navigation/types";
 import { CryptoToken } from "@/types/crypto";
 
@@ -33,6 +34,10 @@ export default function DashboardScreen({ navigation }: Props) {
     isFetchingNextPage,
   } = useCryptoMarketsInfinite();
 
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  const { favoriteTokenIds } = useFavoriteToken();
+
   const tokens = useMemo<CryptoToken[]>(() => {
     return data?.pages.flat() ?? [];
   }, [data]);
@@ -40,15 +45,21 @@ export default function DashboardScreen({ navigation }: Props) {
   const filteredTokens = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    if (!query) return tokens;
+    let list = tokens;
 
-    return tokens.filter((token) => {
+    if (showFavoritesOnly) {
+      list = list.filter((token) => favoriteTokenIds.includes(token.id));
+    }
+
+    if (!query) return list;
+
+    return list.filter((token) => {
       return (
         token.name.toLowerCase().includes(query) ||
         token.symbol.toLowerCase().includes(query)
       );
     });
-  }, [tokens, search]);
+  }, [tokens, search, showFavoritesOnly, favoriteTokenIds]);
 
   const handleTokenPress = useCallback(
     (tokenId: string) => {
@@ -56,7 +67,7 @@ export default function DashboardScreen({ navigation }: Props) {
         tokenId,
       });
     },
-    [navigation]
+    [navigation],
   );
 
   const handleLoadMore = useCallback(() => {
@@ -69,14 +80,9 @@ export default function DashboardScreen({ navigation }: Props) {
 
   const renderToken = useCallback(
     ({ item }: { item: CryptoToken }) => {
-      return (
-        <TokenListItem
-          token={item}
-          onPress={handleTokenPress}
-        />
-      );
+      return <TokenListItem token={item} onPress={handleTokenPress} />;
     },
-    [handleTokenPress]
+    [handleTokenPress],
   );
 
   const renderEmpty = useCallback(() => {
@@ -84,9 +90,7 @@ export default function DashboardScreen({ navigation }: Props) {
   }, [search]);
 
   const renderFooter = useCallback(() => {
-    return (
-      <TokenListFooter loading={isFetchingNextPage} />
-    );
+    return <TokenListFooter loading={isFetchingNextPage} />;
   }, [isFetchingNextPage]);
 
   if (isLoading) {
@@ -117,6 +121,15 @@ export default function DashboardScreen({ navigation }: Props) {
         placeholder="Search token..."
         className="mt-appLg"
       />
+
+      <View className="flex-row mt-appMd">
+        <AppButton
+          title={showFavoritesOnly ? "Show All Coins" : "Show Favorites"}
+          onPress={() => setShowFavoritesOnly((prev) => !prev)}
+          variant="outline"
+          className="flex-1"
+        />
+      </View>
 
       <AppButton
         title="Open Smart Contract"

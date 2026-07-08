@@ -3,6 +3,7 @@ import { Image, Pressable, View } from "react-native";
 
 import AppText from "@/components/common/AppText";
 import { CryptoToken } from "@/types/crypto";
+import { useFavoriteToken } from "@/hooks/useFavoriteToken";
 import {
   formatCompactCurrency,
   formatCurrency,
@@ -14,7 +15,15 @@ type TokenListItemProps = {
   onPress: (tokenId: string) => void;
 };
 
-function TokenListItem({ token, onPress }: TokenListItemProps) {
+function TokenListItem({
+  token,
+  onPress,
+}: TokenListItemProps) {
+  const { isFavorite, toggleFavorite } =
+    useFavoriteToken(token.id);
+
+  const tokenIsFavorite = isFavorite(token.id);
+
   const isPositive =
     (token.price_change_percentage_24h ?? 0) >= 0;
 
@@ -29,7 +38,17 @@ function TokenListItem({ token, onPress }: TokenListItemProps) {
       />
 
       <View className="flex-1">
-        <AppText variant="bodyMedium">{token.name}</AppText>
+        <View className="flex-row items-center">
+          <AppText variant="bodyMedium">
+            {token.name}
+          </AppText>
+
+          {tokenIsFavorite ? (
+            <AppText className="ml-appSm">
+              ⭐
+            </AppText>
+          ) : null}
+        </View>
 
         <AppText
           color="subText"
@@ -40,7 +59,7 @@ function TokenListItem({ token, onPress }: TokenListItemProps) {
         </AppText>
       </View>
 
-      <View className="items-end">
+      <View className="items-end mr-appSm">
         <AppText variant="bodyMedium">
           {formatCurrency(token.current_price)}
         </AppText>
@@ -53,6 +72,18 @@ function TokenListItem({ token, onPress }: TokenListItemProps) {
           MC {formatCompactCurrency(token.market_cap)}
         </AppText>
       </View>
+
+      <Pressable
+        onPress={(event) => {
+          event.stopPropagation();
+          toggleFavorite(token.id);
+        }}
+        className="w-9 h-9 rounded-appPill items-center justify-center bg-app-light-surface dark:bg-app-dark-surface border border-app-light-border dark:border-app-dark-border"
+      >
+        <AppText>
+          {tokenIsFavorite ? "★" : "☆"}
+        </AppText>
+      </Pressable>
     </Pressable>
   );
 }

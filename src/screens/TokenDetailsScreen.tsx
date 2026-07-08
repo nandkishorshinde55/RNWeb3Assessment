@@ -12,33 +12,25 @@ import TokenSupplyCard from "@/components/token/TokenSupplyCard";
 
 import { RootStackParamList } from "@/navigation/types";
 import { useTokenDetails } from "@/hooks/useTokenDetails";
+import AppButton from "@/components/common/AppButton";
+import { useFavoriteToken } from "@/hooks/useFavoriteToken";
 
-type Props = NativeStackScreenProps<
-  RootStackParamList,
-  "TokenDetails"
->;
+type Props = NativeStackScreenProps<RootStackParamList, "TokenDetails">;
 
-export default function TokenDetailsScreen({
-  route,
-}: Props) {
+export default function TokenDetailsScreen({ route }: Props) {
   const { tokenId } = route.params;
 
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-    isRefetching,
-  } = useTokenDetails(tokenId);
+  const { selectedTokenIsFavorite, toggleFavorite } = useFavoriteToken(tokenId);
+
+  const { data, isLoading, isError, refetch, isRefetching } =
+    useTokenDetails(tokenId);
 
   const onRefresh = useCallback(() => {
     refetch();
   }, [refetch]);
 
   if (isLoading) {
-    return (
-      <LoadingState message="Loading token details..." />
-    );
+    return <LoadingState message="Loading token details..." />;
   }
 
   if (isError || !data) {
@@ -56,13 +48,21 @@ export default function TokenDetailsScreen({
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl
-            refreshing={isRefetching}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
         }
       >
         <TokenHeader token={data} />
+
+        <AppButton
+          title={
+            selectedTokenIsFavorite
+              ? "Remove from Favorites"
+              : "Add to Favorites"
+          }
+          onPress={() => toggleFavorite(tokenId)}
+          variant={selectedTokenIsFavorite ? "danger" : "outline"}
+          className="mt-appLg"
+        />
 
         <TokenPriceCard token={data} />
 

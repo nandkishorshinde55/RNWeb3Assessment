@@ -22,7 +22,8 @@ export const useFavoriteTokenStore = create<FavoriteTokenState>()(
 
       toggleFavorite: (tokenId) =>
         set((state) => {
-          const alreadyFavorite = state.favoriteTokenIds.includes(tokenId);
+          const alreadyFavorite =
+            state.favoriteTokenIds.includes(tokenId);
 
           return {
             favoriteTokenIds: alreadyFavorite
