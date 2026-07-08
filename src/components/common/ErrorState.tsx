@@ -1,7 +1,9 @@
 import React from "react";
-import { View } from "react-native";
-import AppText from "./AppText";
-import AppButton from "./AppButton";
+
+import AppScreen from "@/components/common/AppScreen";
+import AppCard from "@/components/common/AppCard";
+import AppButton from "@/components/common/AppButton";
+import AppText from "@/components/common/AppText";
 
 type ErrorStateProps = {
   title?: string;
@@ -15,22 +17,33 @@ export default function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <View className="flex-1 items-center justify-center p-appXl">
-      <AppText variant="subtitle" color="danger" center>
-        {title}
-      </AppText>
+    <AppScreen contentClassName="items-center justify-center">
+      <AppCard className="w-full items-center">
+        <AppText
+          variant="title"
+          color="danger"
+          center
+        >
+          {title}
+        </AppText>
 
-      <AppText color="subText" center className="mt-appSm">
-        {message}
-      </AppText>
+        <AppText
+          variant="body"
+          color="subText"
+          center
+          className="mt-appMd"
+        >
+          {message}
+        </AppText>
 
-      {onRetry ? (
-        <AppButton
-          title="Retry"
-          onPress={onRetry}
-          className="mt-appLg"
-        />
-      ) : null}
-    </View>
+        {onRetry && (
+          <AppButton
+            title="Retry"
+            onPress={onRetry}
+            className="mt-appXl self-stretch"
+          />
+        )}
+      </AppCard>
+    </AppScreen>
   );
 }
