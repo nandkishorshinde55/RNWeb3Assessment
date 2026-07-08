@@ -1,31 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import AppScreen from "@/components/common/AppScreen";
 import AppText from "@/components/common/AppText";
 import AppButton from "@/components/common/AppButton";
 import AppCard from "@/components/common/AppCard";
-import { useTheme } from "@/hooks/useAppTheme";
-import { useWalletStore } from "@/store/walletStore";
+import WalletCard from "@/components/wallet/WalletCard";
+import FaucetHelp from "@/components/wallet/FaucetHelp";
 
-export default function WalletScreen() {
+import { RootStackParamList } from "@/navigation/types";
+import { useWallet } from "@/hooks/useWallet";
+import { useTheme } from "@/hooks/useAppTheme";
+
+type Props = NativeStackScreenProps<RootStackParamList, "Wallet">;
+
+export default function WalletScreen({ navigation }: Props) {
   const { isDark, toggleTheme } = useTheme();
 
-  const { session, setWalletSession, clearWalletSession } = useWalletStore();
+  const {
+    isConnected,
+    session,
+    status,
+    error,
+    isWrongNetwork,
+    connectWallet,
+    disconnectWallet,
+    switchToSepolia,
+    fetchAndSaveWalletSession,
+  } = useWallet();
 
-  const mockConnectWallet = () => {
-    setWalletSession({
-      address: "0x1234567890abcdef1234567890abcdef12345678",
-      chainId: 11155111,
-      chainName: "Ethereum Sepolia",
-      balance: "0.05",
-    });
-  };
+  useEffect(() => {
+    if (isConnected) {
+      fetchAndSaveWalletSession();
+    }
+  }, [isConnected, fetchAndSaveWalletSession]);
 
   return (
     <AppScreen scrollable>
-      <AppText variant="title">Wallet Connection</AppText>
+      <AppText variant="title">React Native Web3</AppText>
 
       <AppText color="subText" className="mt-appSm">
-        Theme and wallet session are now persisted using Zustand + MMKV.
+        WalletConnect/Reown integration with Zustand persistence.
       </AppText>
 
       <AppCard className="mt-appLg">
@@ -42,44 +57,35 @@ export default function WalletScreen() {
         />
       </AppCard>
 
-      <AppCard className="mt-appLg">
-        <AppText variant="subtitle">Wallet Session</AppText>
+      <WalletCard
+        session={session}
+        isWrongNetwork={isWrongNetwork}
+        onConnect={connectWallet}
+        onDisconnect={disconnectWallet}
+        onSwitchNetwork={switchToSepolia}
+        loading={status === "connecting"}
+      />
 
-        {session ? (
-          <>
-            <AppText color="subText" className="mt-appSm">
-              Address: {session.address}
-            </AppText>
+      {error ? (
+        <AppText color="danger" className="mt-appSm">
+          {error}
+        </AppText>
+      ) : null}
 
-            <AppText color="subText" className="mt-appSm">
-              Chain: {session.chainName}
-            </AppText>
+      {session ? (
+        <>
+          <FaucetHelp
+            address={session.address}
+            onRefreshBalance={fetchAndSaveWalletSession}
+          />
 
-            <AppText color="subText" className="mt-appSm">
-              Balance: {session.balance} ETH
-            </AppText>
-
-            <AppButton
-              title="Clear Wallet Session"
-              variant="danger"
-              onPress={clearWalletSession}
-              className="mt-appLg"
-            />
-          </>
-        ) : (
-          <>
-            <AppText color="subText" className="mt-appSm">
-              No wallet session found.
-            </AppText>
-
-            <AppButton
-              title="Mock Connect Wallet"
-              onPress={mockConnectWallet}
-              className="mt-appLg"
-            />
-          </>
-        )}
-      </AppCard>
+          <AppButton
+            title="Go to Dashboard"
+            onPress={() => navigation.navigate("Dashboard")}
+            className="mt-appLg"
+          />
+        </>
+      ) : null}
     </AppScreen>
   );
 }

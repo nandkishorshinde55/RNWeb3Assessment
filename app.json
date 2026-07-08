@@ -1,30 +1,44 @@
 {
   "expo": {
     "name": "RNWeb3Assessment",
-    "slug": "RNWeb3Assessment",
+    "slug": "rn-web3-assessment",
     "version": "1.0.0",
+
+    "scheme": "rnweb3assessment",
+
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+
+    "userInterfaceStyle": "automatic",
+
+    "newArchEnabled": true,
+
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.RNWeb3Assessment"
+      "bundleIdentifier": "com.anonymous.rnweb3assessment"
     },
+
     "android": {
+      "package": "com.anonymous.rnweb3assessment",
+
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.RNWeb3Assessment"
+        "monochromeImage": "./assets/android-icon-monochrome.png",
+        "backgroundColor": "#E6F4FE"
+      }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     },
+
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+
+    "experiments": {
+      "typedRoutes": false
+    }
   }
 }
