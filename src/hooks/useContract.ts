@@ -1,22 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { SEPOLIA_CHAIN } from "@/constants/chains";
 import { contractService } from "@/services/blockchain/contractService";
 import { getBlockchainErrorMessage } from "@/services/blockchain/blockchainErrorMapper";
 import { TransactionState } from "@/types/transaction";
 import { useWallet } from "@/hooks/useWallet";
-import { SEPOLIA_CHAIN } from "@/constants/chains";
+
+const initialTransactionState: TransactionState = {
+  status: "idle",
+  hash: null,
+  error: null,
+};
 
 export const useContract = () => {
-  const { provider, session } = useWallet();
+  const { provider, session, switchToSepolia } = useWallet();
 
-  const [currentValue, setCurrentValue] = useState<string>("");
+  const [currentValue, setCurrentValue] = useState("");
   const [loadingValue, setLoadingValue] = useState(false);
+  const [transaction, setTransaction] =
+    useState<TransactionState>(initialTransactionState);
 
-  const [transaction, setTransaction] = useState<TransactionState>({
-    status: "idle",
-    hash: null,
-    error: null,
-  });
+  const resetTransaction = useCallback(() => {
+    setTransaction(initialTransactionState);
+  }, []);
 
   const readValue = useCallback(async () => {
     try {
@@ -39,6 +45,12 @@ export const useContract = () => {
   const updateValue = useCallback(
     async (value: number) => {
       try {
+        setTransaction({
+          status: "validating",
+          hash: null,
+          error: null,
+        });
+
         if (!session) {
           setTransaction({
             status: "failed",
@@ -63,14 +75,9 @@ export const useContract = () => {
             hash: null,
             error: "Wrong network. Please switch to Ethereum Sepolia.",
           });
+
           return;
         }
-
-        setTransaction({
-          status: "preparing",
-          hash: null,
-          error: null,
-        });
 
         const result = await contractService.updateCurrentValue({
           walletProvider: provider,
@@ -111,5 +118,7 @@ export const useContract = () => {
     transaction,
     readValue,
     updateValue,
+    resetTransaction,
+    switchToSepolia,
   };
 };

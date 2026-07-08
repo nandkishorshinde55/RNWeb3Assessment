@@ -5,54 +5,49 @@ import AppCard from "@/components/common/AppCard";
 import AppText from "@/components/common/AppText";
 import AppButton from "@/components/common/AppButton";
 
+import TransactionStepper from "@/components/contract/TransactionStepper";
+
 import { SEPOLIA_CHAIN } from "@/constants/chains";
 import { TransactionState } from "@/types/transaction";
 
 type Props = {
   transaction: TransactionState;
-};
-
-const statusLabel = {
-  idle: "Idle",
-  preparing: "Preparing Transaction",
-  awaiting_signature: "Awaiting Wallet Signature",
-  broadcasting: "Broadcasting Transaction",
-  confirming: "Waiting for Block Confirmation",
-  confirmed: "Transaction Confirmed",
-  failed: "Transaction Failed",
+  onReset?: () => void;
 };
 
 export default function TransactionStatusCard({
   transaction,
+  onReset,
 }: Props) {
   if (transaction.status === "idle") return null;
 
   const openEtherscan = () => {
     if (!transaction.hash) return;
 
-    Linking.openURL(`${SEPOLIA_CHAIN.explorerUrl}/tx/${transaction.hash}`);
+    Linking.openURL(
+      `${SEPOLIA_CHAIN.explorerUrl}/tx/${transaction.hash}`
+    );
   };
 
   return (
     <AppCard className="mt-appLg">
-      <AppText variant="subtitle">Transaction Status</AppText>
-
-      <AppText
-        color={transaction.status === "failed" ? "danger" : "subText"}
-        className="mt-appMd"
-      >
-        {statusLabel[transaction.status]}
+      <AppText variant="subtitle">
+        Transaction Flow
       </AppText>
 
+      <TransactionStepper
+        currentStatus={transaction.status}
+      />
+
       {transaction.error ? (
-        <AppText color="danger" className="mt-appSm">
+        <AppText color="danger" className="mt-appMd">
           {transaction.error}
         </AppText>
       ) : null}
 
       {transaction.hash ? (
         <>
-          <AppText color="subText" className="mt-appSm">
+          <AppText color="subText" className="mt-appMd">
             Hash: {transaction.hash}
           </AppText>
 
@@ -63,6 +58,15 @@ export default function TransactionStatusCard({
             className="mt-appLg"
           />
         </>
+      ) : null}
+
+      {onReset ? (
+        <AppButton
+          title="Clear Status"
+          onPress={onReset}
+          variant="ghost"
+          className="mt-appSm"
+        />
       ) : null}
     </AppCard>
   );
