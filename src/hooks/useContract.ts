@@ -17,8 +17,9 @@ export const useContract = () => {
 
   const [currentValue, setCurrentValue] = useState("");
   const [loadingValue, setLoadingValue] = useState(false);
-  const [transaction, setTransaction] =
-    useState<TransactionState>(initialTransactionState);
+  const [transaction, setTransaction] = useState<TransactionState>(
+    initialTransactionState,
+  );
 
   const resetTransaction = useCallback(() => {
     setTransaction(initialTransactionState);
@@ -105,7 +106,7 @@ export const useContract = () => {
         });
       }
     },
-    [provider, session, readValue]
+    [provider, session, readValue],
   );
 
   useEffect(() => {

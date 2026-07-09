@@ -1,10 +1,6 @@
 import { useCallback } from "react";
 import { ethers } from "ethers";
-import {
-  useAccount,
-  useAppKit,
-  useProvider,
-} from "@reown/appkit-react-native";
+import { useAccount, useAppKit, useProvider } from "@reown/appkit-react-native";
 
 import { SEPOLIA_CHAIN } from "@/constants/chains";
 import { useWalletStore } from "@/store/walletStore";
@@ -14,7 +10,7 @@ import { sepoliaNetwork } from "@/config/appKitConfig";
 export const useWallet = () => {
   const { open, disconnect, switchNetwork } = useAppKit();
   const { address, chainId, isConnected } = useAccount();
-const { provider } = useProvider();
+  const { provider } = useProvider();
 
   const {
     session,

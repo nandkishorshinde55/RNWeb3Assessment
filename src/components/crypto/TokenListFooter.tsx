@@ -6,9 +6,7 @@ type TokenListFooterProps = {
   loading: boolean;
 };
 
-export default function TokenListFooter({
-  loading,
-}: TokenListFooterProps) {
+export default function TokenListFooter({ loading }: TokenListFooterProps) {
   if (!loading) return null;
 
   return (

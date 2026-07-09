@@ -110,7 +110,7 @@ export default function DashboardScreen({ navigation }: Props) {
 
   return (
     <AppScreen>
-    <AppHeader title="Crypto Dashboard" showBack/>
+      <AppHeader title="Crypto Dashboard" showBack />
 
       <AppText color="subText" className="mt-appSm">
         Market data powered by CoinGecko.

@@ -16,10 +16,7 @@ export const reownStorage = {
   },
 
   async setItem<T = unknown>(key: string, value: T): Promise<void> {
-    const data =
-      typeof value === "string"
-        ? value
-        : JSON.stringify(value);
+    const data = typeof value === "string" ? value : JSON.stringify(value);
 
     await AsyncStorage.setItem(key, data);
   },
@@ -32,11 +29,8 @@ export const reownStorage = {
     return [...(await AsyncStorage.getAllKeys())];
   },
 
-  async getEntries<T = unknown>(
-    keys?: string[]
-  ): Promise<[string, T][]> {
-    const storageKeys =
-      keys ?? [...(await AsyncStorage.getAllKeys())];
+  async getEntries<T = unknown>(keys?: string[]): Promise<[string, T][]> {
+    const storageKeys = keys ?? [...(await AsyncStorage.getAllKeys())];
 
     const entries = await AsyncStorage.multiGet(storageKeys);
 

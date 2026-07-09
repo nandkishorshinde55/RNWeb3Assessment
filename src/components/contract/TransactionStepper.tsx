@@ -12,7 +12,7 @@ type Props = {
 const getStepState = (
   stepIndex: number,
   currentIndex: number,
-  isFailed: boolean
+  isFailed: boolean,
 ) => {
   if (isFailed) return "pending";
   if (stepIndex < currentIndex) return "completed";
@@ -20,25 +20,19 @@ const getStepState = (
   return "pending";
 };
 
-export default function TransactionStepper({
-  currentStatus,
-}: Props) {
+export default function TransactionStepper({ currentStatus }: Props) {
   if (currentStatus === "idle") return null;
 
   const isFailed = currentStatus === "failed";
 
   const currentIndex = TRANSACTION_STEPS.findIndex(
-    (step) => step.key === currentStatus
+    (step) => step.key === currentStatus,
   );
 
   return (
     <View className="mt-appLg">
       {TRANSACTION_STEPS.map((step, index) => {
-        const state = getStepState(
-          index,
-          currentIndex,
-          isFailed
-        );
+        const state = getStepState(index, currentIndex, isFailed);
 
         const dotClass =
           state === "completed"
@@ -48,22 +42,13 @@ export default function TransactionStepper({
               : "bg-app-light-border dark:bg-app-dark-border";
 
         const textColor =
-          state === "completed" || state === "active"
-            ? "text"
-            : "subText";
+          state === "completed" || state === "active" ? "text" : "subText";
 
         return (
-          <View
-            key={step.key}
-            className="flex-row items-center mb-appMd"
-          >
-            <View
-              className={`w-3 h-3 rounded-full mr-appMd ${dotClass}`}
-            />
+          <View key={step.key} className="flex-row items-center mb-appMd">
+            <View className={`w-3 h-3 rounded-full mr-appMd ${dotClass}`} />
 
-            <AppText color={textColor}>
-              {step.label}
-            </AppText>
+            <AppText color={textColor}>{step.label}</AppText>
           </View>
         );
       })}

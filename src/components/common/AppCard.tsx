@@ -7,10 +7,7 @@ type AppCardProps = {
   className?: string;
 };
 
-export default function AppCard({
-  children,
-  className = "",
-}: AppCardProps) {
+export default function AppCard({ children, className = "" }: AppCardProps) {
   const { isDark } = useTheme();
 
   const cardClass = isDark

@@ -22,8 +22,7 @@ export const useFavoriteTokenStore = create<FavoriteTokenState>()(
 
       toggleFavorite: (tokenId) =>
         set((state) => {
-          const alreadyFavorite =
-            state.favoriteTokenIds.includes(tokenId);
+          const alreadyFavorite = state.favoriteTokenIds.includes(tokenId);
 
           return {
             favoriteTokenIds: alreadyFavorite
@@ -43,6 +42,6 @@ export const useFavoriteTokenStore = create<FavoriteTokenState>()(
       partialize: (state) => ({
         favoriteTokenIds: state.favoriteTokenIds,
       }),
-    }
-  )
+    },
+  ),
 );

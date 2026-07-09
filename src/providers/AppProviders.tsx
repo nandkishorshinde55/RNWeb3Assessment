@@ -1,10 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import {
-  AppKit,
-  AppKitProvider,
-} from "@reown/appkit-react-native";
+import { AppKit, AppKitProvider } from "@reown/appkit-react-native";
 
 import QueryProvider from "./QueryProvider";
 import RootNavigator from "@/navigation/RootNavigator";

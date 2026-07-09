@@ -7,7 +7,4 @@ export type WalletSession = {
 };
 
 export type WalletConnectionStatus =
-  | "disconnected"
-  | "connecting"
-  | "connected"
-  | "error";
+  "disconnected" | "connecting" | "connected" | "error";

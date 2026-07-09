@@ -33,6 +33,6 @@ export const useThemeStore = create<ThemeState>()(
       partialize: (state) => ({
         mode: state.mode,
       }),
-    }
-  )
+    },
+  ),
 );

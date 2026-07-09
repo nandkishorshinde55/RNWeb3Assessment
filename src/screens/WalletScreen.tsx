@@ -38,7 +38,7 @@ export default function WalletScreen({ navigation }: Props) {
 
   return (
     <AppScreen scrollable>
-     <AppHeader title="Wallet" />
+      <AppHeader title="Wallet" />
 
       <AppText color="subText" className="mt-appSm">
         WalletConnect/Reown integration with Zustand persistence.

@@ -1,9 +1,6 @@
 import { ethers } from "ethers";
 
-import {
-  CONTRACT_ABI,
-  CONTRACT_ADDRESS,
-} from "@/constants/contract";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/constants/contract";
 
 import {
   getSepoliaReadProvider,
@@ -21,7 +18,7 @@ export const contractService = {
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
       CONTRACT_ABI,
-      provider
+      provider,
     );
 
     const value = await contract.retrieve();
@@ -45,7 +42,7 @@ export const contractService = {
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
       CONTRACT_ABI,
-      signer
+      signer,
     );
 
     onStatusChange?.("awaiting_signature");

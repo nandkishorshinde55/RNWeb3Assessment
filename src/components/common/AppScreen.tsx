@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@/hooks/useAppTheme";
 
@@ -26,9 +21,7 @@ export default function AppScreen({
   const { isDark } = useTheme();
   const insets = useSafeAreaInsets();
 
-  const bgClass = isDark
-    ? "bg-app-dark-background"
-    : "bg-app-light-background";
+  const bgClass = isDark ? "bg-app-dark-background" : "bg-app-light-background";
 
   const content = scrollable ? (
     <ScrollView

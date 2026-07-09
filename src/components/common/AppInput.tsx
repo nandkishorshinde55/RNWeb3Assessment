@@ -25,11 +25,7 @@ export default function AppInput({
   return (
     <View className="w-full">
       {label && (
-        <AppText
-          variant="caption"
-          color="subText"
-          className="mb-appXs mt-2"
-        >
+        <AppText variant="caption" color="subText" className="mb-appXs mt-2">
           {label}
         </AppText>
       )}
@@ -50,11 +46,7 @@ export default function AppInput({
       />
 
       {error && (
-        <AppText
-          variant="caption"
-          color="danger"
-          className="mt-appXs"
-        >
+        <AppText variant="caption" color="danger" className="mt-appXs">
           {error}
         </AppText>
       )}

@@ -2,10 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { appStorage } from "@/storage/appStorage";
-import {
-  WalletConnectionStatus,
-  WalletSession,
-} from "@/types/wallet";
+import { WalletConnectionStatus, WalletSession } from "@/types/wallet";
 
 type WalletState = {
   session: WalletSession | null;
@@ -77,6 +74,6 @@ export const useWalletStore = create<WalletState>()(
       partialize: (state) => ({
         session: state.session,
       }),
-    }
-  )
+    },
+  ),
 );

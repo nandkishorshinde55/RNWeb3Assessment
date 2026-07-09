@@ -3,12 +3,7 @@ import { Text, TextProps } from "react-native";
 import { useTheme } from "@/hooks/useAppTheme";
 
 type TextVariant =
-  | "title"
-  | "subtitle"
-  | "body"
-  | "bodyMedium"
-  | "caption"
-  | "button";
+  "title" | "subtitle" | "body" | "bodyMedium" | "caption" | "button";
 
 type TextColor =
   | "text"
@@ -49,9 +44,7 @@ export default function AppText({
   const colorClass: Record<TextColor, string> = {
     text: isDark ? "text-app-dark-text" : "text-app-light-text",
     subText: isDark ? "text-app-dark-subText" : "text-app-light-subText",
-    mutedText: isDark
-      ? "text-app-dark-mutedText"
-      : "text-app-light-mutedText",
+    mutedText: isDark ? "text-app-dark-mutedText" : "text-app-light-mutedText",
     primary: "text-app-primary",
     success: "text-app-success",
     danger: "text-app-danger",

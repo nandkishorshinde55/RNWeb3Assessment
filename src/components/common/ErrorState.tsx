@@ -19,20 +19,11 @@ export default function ErrorState({
   return (
     <AppScreen contentClassName="items-center justify-center">
       <AppCard className="w-full items-center">
-        <AppText
-          variant="title"
-          color="danger"
-          center
-        >
+        <AppText variant="title" color="danger" center>
           {title}
         </AppText>
 
-        <AppText
-          variant="body"
-          color="subText"
-          center
-          className="mt-appMd"
-        >
+        <AppText variant="body" color="subText" center className="mt-appMd">
           {message}
         </AppText>
 

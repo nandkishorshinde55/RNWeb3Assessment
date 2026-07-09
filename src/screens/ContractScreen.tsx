@@ -48,7 +48,7 @@ export default function ContractScreen() {
 
   return (
     <AppScreen scrollable keyboardAvoiding>
-     <AppHeader title="Smart Contract" showBack />
+      <AppHeader title="Smart Contract" showBack />
 
       <AppText color="subText" className="mt-appSm">
         Read and update value on Ethereum Sepolia.

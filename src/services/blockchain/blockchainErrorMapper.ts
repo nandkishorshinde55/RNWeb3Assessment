@@ -1,11 +1,8 @@
 export const getBlockchainErrorMessage = (error: unknown): string => {
-  const message =
-    error instanceof Error ? error.message.toLowerCase() : "";
+  const message = error instanceof Error ? error.message.toLowerCase() : "";
 
   const code =
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error
+    typeof error === "object" && error !== null && "code" in error
       ? String((error as any).code).toLowerCase()
       : "";
 
@@ -31,17 +28,11 @@ export const getBlockchainErrorMessage = (error: unknown): string => {
     return "Network issue. Please check your internet connection or Sepolia RPC.";
   }
 
-  if (
-    message.includes("timeout") ||
-    message.includes("request timed out")
-  ) {
+  if (message.includes("timeout") || message.includes("request timed out")) {
     return "The request timed out. Please try again.";
   }
 
-  if (
-    message.includes("execution reverted") ||
-    message.includes("reverted")
-  ) {
+  if (message.includes("execution reverted") || message.includes("reverted")) {
     return "Smart contract execution failed.";
   }
 
@@ -52,10 +43,7 @@ export const getBlockchainErrorMessage = (error: unknown): string => {
     return "Contract call failed. Please verify contract address, ABI, and network.";
   }
 
-  if (
-    message.includes("nonce") ||
-    message.includes("replacement fee")
-  ) {
+  if (message.includes("nonce") || message.includes("replacement fee")) {
     return "Transaction nonce issue. Please wait for your previous transaction to finish.";
   }
 

@@ -10,9 +10,7 @@ type Props = {
   token: TokenDetails;
 };
 
-export default function TokenHeader({
-  token,
-}: Props) {
+export default function TokenHeader({ token }: Props) {
   return (
     <AppCard>
       <View className="flex-row items-center">
@@ -24,14 +22,9 @@ export default function TokenHeader({
         />
 
         <View className="ml-appLg flex-1">
-          <AppText variant="title">
-            {token.name}
-          </AppText>
+          <AppText variant="title">{token.name}</AppText>
 
-          <AppText
-            color="subText"
-            className="uppercase mt-appXs"
-          >
+          <AppText color="subText" className="uppercase mt-appXs">
             {token.symbol}
           </AppText>
         </View>

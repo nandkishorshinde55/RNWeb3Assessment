@@ -2,13 +2,9 @@ import "@walletconnect/react-native-compat";
 import "react-native-get-random-values";
 
 import { reownStorage } from "@/storage/reownStorage";
-import {
-  createAppKit,
-  type AppKitNetwork,
-} from "@reown/appkit-react-native";
+import { createAppKit, type AppKitNetwork } from "@reown/appkit-react-native";
 import { EthersAdapter } from "@reown/appkit-ethers-react-native";
-
-const projectId ="5de4cd1a6388d6dcf7524027e151da84";
+import { ENV } from "@/config/env";
 
 const metadata = {
   name: "RN Web3 Assessment",
@@ -46,7 +42,7 @@ export const sepoliaNetwork: AppKitNetwork = {
 const ethersAdapter = new EthersAdapter();
 
 export const appKit = createAppKit({
-  projectId,
+  projectId: ENV.REOWN_PROJECT_ID,
   metadata,
   storage: reownStorage,
   adapters: [ethersAdapter],

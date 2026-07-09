@@ -25,8 +25,7 @@ export default function TokenDetailsScreen({ route }: Props) {
   const { data, isLoading, isError, refetch, isRefetching } =
     useTokenDetails(tokenId);
 
-  const { selectedTokenIsFavorite, toggleFavorite } =
-    useFavoriteToken(tokenId);
+  const { selectedTokenIsFavorite, toggleFavorite } = useFavoriteToken(tokenId);
 
   const onRefresh = useCallback(() => {
     refetch();

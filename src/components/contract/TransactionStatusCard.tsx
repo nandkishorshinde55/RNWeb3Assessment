@@ -15,29 +15,20 @@ type Props = {
   onReset?: () => void;
 };
 
-export default function TransactionStatusCard({
-  transaction,
-  onReset,
-}: Props) {
+export default function TransactionStatusCard({ transaction, onReset }: Props) {
   if (transaction.status === "idle") return null;
 
   const openEtherscan = () => {
     if (!transaction.hash) return;
 
-    Linking.openURL(
-      `${SEPOLIA_CHAIN.explorerUrl}/tx/${transaction.hash}`
-    );
+    Linking.openURL(`${SEPOLIA_CHAIN.explorerUrl}/tx/${transaction.hash}`);
   };
 
   return (
     <AppCard className="mt-appLg">
-      <AppText variant="subtitle">
-        Transaction Flow
-      </AppText>
+      <AppText variant="subtitle">Transaction Flow</AppText>
 
-      <TransactionStepper
-        currentStatus={transaction.status}
-      />
+      <TransactionStepper currentStatus={transaction.status} />
 
       {transaction.error ? (
         <AppText color="danger" className="mt-appMd">

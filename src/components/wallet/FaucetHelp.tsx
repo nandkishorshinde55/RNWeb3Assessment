@@ -5,14 +5,14 @@ import * as Clipboard from "expo-clipboard";
 import AppCard from "@/components/common/AppCard";
 import AppText from "@/components/common/AppText";
 import AppButton from "@/components/common/AppButton";
+import { ENV } from "@/config/env";
 
 type Props = {
   address: string;
   onRefreshBalance?: () => Promise<void>;
 };
 
-const SEPOLIA_FAUCET_URL =
-  "https://cloud.google.com/application/web3/faucet/ethereum/sepolia";
+const SEPOLIA_FAUCET_URL =ENV.EXPO_SEPOLIA_FAUCET_URL
 
 export default function FaucetHelp({ address, onRefreshBalance }: Props) {
   const copyAddress = async () => {

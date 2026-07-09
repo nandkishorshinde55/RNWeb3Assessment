@@ -1,8 +1,5 @@
 import { axiosClient } from "@/api/client/axiosClient";
-import {
-  CryptoMarketResponse,
-  TokenDetails,
-} from "@/types/crypto";
+import { CryptoMarketResponse, TokenDetails } from "@/types/crypto";
 
 type GetMarketsParams = {
   page: number;
@@ -25,27 +22,22 @@ export const cryptoApi = {
           sparkline: false,
           price_change_percentage: "24h",
         },
-      }
+      },
     );
     return response.data;
   },
 
-  getTokenDetails: async (
-    tokenId: string
-  ): Promise<TokenDetails> => {
-    const response = await axiosClient.get<TokenDetails>(
-      `/coins/${tokenId}`,
-      {
-        params: {
-          localization: false,
-          tickers: false,
-          market_data: true,
-          community_data: false,
-          developer_data: false,
-          sparkline: false,
-        },
-      }
-    );
+  getTokenDetails: async (tokenId: string): Promise<TokenDetails> => {
+    const response = await axiosClient.get<TokenDetails>(`/coins/${tokenId}`, {
+      params: {
+        localization: false,
+        tickers: false,
+        market_data: true,
+        community_data: false,
+        developer_data: false,
+        sparkline: false,
+      },
+    });
 
     return response.data;
   },

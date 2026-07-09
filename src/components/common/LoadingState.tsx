@@ -19,17 +19,9 @@ export default function LoadingState({
         isDark ? "bg-app-dark-background" : "bg-app-light-background"
       }`}
     >
-      <ActivityIndicator
-        size="large"
-        color={isDark ? "#FFFFFF" : "#2563EB"}
-      />
+      <ActivityIndicator size="large" color={isDark ? "#FFFFFF" : "#2563EB"} />
 
-      <AppText
-        variant="body"
-        color="subText"
-        center
-        className="mt-appLg"
-      >
+      <AppText variant="body" color="subText" center className="mt-appLg">
         {message}
       </AppText>
     </View>

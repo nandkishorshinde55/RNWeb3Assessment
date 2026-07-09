@@ -1,5 +1,6 @@
-export const CONTRACT_ADDRESS =
-  "0xfF971A0e566b2175D48393cbC082577F8629b39f";
+import { ENV } from "@/config/env";
+
+export const CONTRACT_ADDRESS = ENV.CONTRACT_ADDRESS;
 
 export const CONTRACT_ABI = [
   {
