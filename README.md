@@ -476,6 +476,25 @@ Download Link:- https://drive.google.com/file/d/11F9pMkca6iF79jjDitL0OI3Wjg8uOqt
 
 ---
 
+# Install & Run APK
+
+1. Download and install the APK on your Android device.
+2. Install MetaMask from the Google Play Store.
+3. Open MetaMask and login/create/import wallet.
+4. Go to **Settings → Advanced**.
+5. Enable **Show test networks**.
+6. Go to **Networks** and select/add **Ethereum Sepolia**.
+7. Make sure MetaMask is unlocked before tapping **Connect Wallet** in the app.
+8. If connection does not work, clear old app data:
+
+   **Android Settings → Apps → RNWeb3Assessment → Storage → Clear Data**
+
+9. Reopen the app and try connecting again.
+
+> Wallet connection works best on a real Android device with MetaMask installed, logged in, unlocked, and Sepolia enabled.
+
+---
+
 # Deliverables
 
 - ✅ GitHub Repository
