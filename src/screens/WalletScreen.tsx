@@ -27,14 +27,16 @@ export default function WalletScreen({ navigation }: Props) {
     connectWallet,
     disconnectWallet,
     switchToSepolia,
-    fetchAndSaveWalletSession,
+    syncSession,
+    retryConnection,
+    cancelConnection,
   } = useWallet();
 
   useEffect(() => {
     if (isConnected) {
-      fetchAndSaveWalletSession();
+      syncSession().catch(() => {});
     }
-  }, [isConnected, fetchAndSaveWalletSession]);
+  }, [isConnected, syncSession]);
 
   return (
     <AppScreen scrollable>
@@ -60,24 +62,33 @@ export default function WalletScreen({ navigation }: Props) {
 
       <WalletCard
         session={session}
+        status={status}
+        error={error}
         isWrongNetwork={isWrongNetwork}
         onConnect={connectWallet}
         onDisconnect={disconnectWallet}
         onSwitchNetwork={switchToSepolia}
-        loading={status === "connecting"}
+        onRetry={retryConnection}
+        onCancel={cancelConnection}
       />
 
       {error ? (
-        <AppText color="danger" className="mt-appSm">
-          {error}
-        </AppText>
+        <>
+          <AppText color="danger" className="mt-appMd">
+            {error.title}
+          </AppText>
+
+          <AppText color="subText" className="mt-appSm">
+            {error.message}
+          </AppText>
+        </>
       ) : null}
 
       {session ? (
         <>
           <FaucetHelp
             address={session.address}
-            onRefreshBalance={fetchAndSaveWalletSession}
+            onRefreshBalance={syncSession}
           />
 
           <AppButton

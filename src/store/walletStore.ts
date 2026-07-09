@@ -1,79 +1,44 @@
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-
-import { appStorage } from "@/storage/appStorage";
-import { WalletConnectionStatus, WalletSession } from "@/types/wallet";
+import { WalletError, WalletSession, WalletStatus } from "@/types/wallet";
 
 type WalletState = {
   session: WalletSession | null;
-  status: WalletConnectionStatus;
-  error: string | null;
+  status: WalletStatus;
+  error: WalletError | null;
 
-  setConnecting: () => void;
-
-  setWalletSession: (session: Omit<WalletSession, "lastConnectedAt">) => void;
-
-  updateBalance: (balance: string) => void;
-
-  setWalletError: (message: string) => void;
-
-  clearWalletSession: () => void;
+  setStatus: (status: WalletStatus) => void;
+  setSession: (session: WalletSession) => void;
+  setError: (error: WalletError) => void;
+  clearError: () => void;
+  resetWallet: () => void;
 };
 
-export const useWalletStore = create<WalletState>()(
-  persist(
-    (set) => ({
-      session: null,
-      status: "disconnected",
+export const useWalletStore = create<WalletState>((set) => ({
+  session: null,
+  status: "idle",
+  error: null,
+
+  setStatus: (status) => set({ status }),
+
+  setSession: (session) =>
+    set({
+      session,
+      status: "connected",
       error: null,
-
-      setConnecting: () =>
-        set({
-          status: "connecting",
-          error: null,
-        }),
-
-      setWalletSession: (session) =>
-        set({
-          session: {
-            ...session,
-            lastConnectedAt: Date.now(),
-          },
-          status: "connected",
-          error: null,
-        }),
-
-      updateBalance: (balance) =>
-        set((state) => {
-          if (!state.session) return state;
-
-          return {
-            session: {
-              ...state.session,
-              balance,
-            },
-          };
-        }),
-
-      setWalletError: (message) =>
-        set({
-          status: "error",
-          error: message,
-        }),
-
-      clearWalletSession: () =>
-        set({
-          session: null,
-          status: "disconnected",
-          error: null,
-        }),
     }),
-    {
-      name: "wallet-storage",
-      storage: createJSONStorage(() => appStorage),
-      partialize: (state) => ({
-        session: state.session,
-      }),
-    },
-  ),
-);
+
+  setError: (error) =>
+    set({
+      error,
+      status: "error",
+    }),
+
+  clearError: () => set({ error: null }),
+
+  resetWallet: () =>
+    set({
+      session: null,
+      status: "idle",
+      error: null,
+    }),
+}));
